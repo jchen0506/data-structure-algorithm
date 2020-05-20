@@ -23,12 +23,18 @@ var evenOccurrence = function (arr) {
     }
   });
   // check if it's even
-  for (var key in occuranceMap) {
-    if (occuranceMap[key] % 2 === 0) {
-      return key;
+  for (var i = 0; i < arr.length; i++) {
+    if (occuranceMap[arr[i]] % 2 === 0) {
+      return arr[i];
     }
   }
   return null;
   //find the first even one
   // if no even return null
 };
+
+var onlyEven = evenOccurrence([1, 7, 2, 4, 5, 6, 8, 9, 6, 4]);
+console.log(onlyEven); //  4
+
+console.log(typeof evenOccurrence([1, 3, 3, 3, 2, 4, 4, 2, 5])); //  2
+console.log(evenOccurrence(['meow', 1, 1, 'meow']));
