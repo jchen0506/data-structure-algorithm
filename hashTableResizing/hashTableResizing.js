@@ -61,6 +61,7 @@ var makeHashTable = function () {
       }
     }
     console.log('Item not exist');
+    return undefined;
   };
 
   result.remove = function (key) {
