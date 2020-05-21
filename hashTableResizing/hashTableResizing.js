@@ -55,6 +55,9 @@ var makeHashTable = function () {
     // TODO: implement `retrieve`
     var index = getIndexBelowMaxForKey(key, storageLimit);
     var bucket = storage[index];
+    if (bucket === undefined) {
+      return undefined;
+    }
     for (var i = 0; i < bucket.length; i++) {
       if (bucket[i][0] === key) {
         return bucket[i][1];
@@ -68,6 +71,9 @@ var makeHashTable = function () {
     // TODO: implement `remove`
     var index = getIndexBelowMaxForKey(key, storageLimit);
     var bucket = storage[index];
+    if (bucket === undefined) {
+      return undefined;
+    }
     for (var i = 0; i < bucket.length; i++) {
       if (bucket[i][0] === key) {
         bucket.splice(i, 1);
@@ -101,13 +107,8 @@ var makeHashTable = function () {
 };
 
 var hashTable = makeHashTable();
-console.log(hashTable.insert('cat', 'meow'));
-console.log(hashTable.insert('dog', 'bark'));
-// console.log(hashTable.retrieve('dog'));
-// hashTable.retrieve('fish');
-// console.log(hashTable.remove('dog'));
-console.log(hashTable.insert('fish', 'bubble'));
-console.log('Resize happend');
-console.log(hashTable.insert('rabbit', 'jump'));
-console.log(hashTable.insert('lion', 'roar'));
+hashTable.insert("Spielberg's best movie", 'Jaws');
+hashTable.remove("Spielberg's best movie");
+var value = hashTable.retrieve("Spielberg's best movie");
+console.log(value);
 // console.log('')
