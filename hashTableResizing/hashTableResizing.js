@@ -10,7 +10,7 @@
 // This is a "hashing function". You don't need to worry about it, just use it
 // to turn any string into an integer that is well-distributed between
 // 0 and max - 1
-var getIndexBelowMaxForKey = function(str, max) {
+var getIndexBelowMaxForKey = function (str, max) {
   var hash = 0;
   for (var i = 0; i < str.length; i++) {
     hash = (hash << 5) + hash + str.charCodeAt(i);
@@ -20,26 +20,93 @@ var getIndexBelowMaxForKey = function(str, max) {
   return hash % max;
 };
 
-var makeHashTable = function() {
+var makeHashTable = function () {
   var result = {};
   var storage = [];
   var storageLimit = 4;
   var size = 0;
-  
-  result.insert = function(/*...*/ 
-) {
+
+  result.insert = function (key, value) {
     // TODO: implement `insert`
+    var index = getIndexBelowMaxForKey(key, storageLimit);
+    var bucket = storage[index];
+    if (!bucket) {
+      bucket = [];
+    }
+    var duplicated = false;
+    for (var i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        bucket[i][1] = value;
+        duplicated = true;
+      }
+    }
+    if (!duplicated) {
+      bucket.push([key, value]);
+      size++;
+      if (size > 0.75 * storageLimit) {
+        result.rehash(storageLimit * 2);
+      }
+    }
+    storage[index] = bucket;
+    return storage;
   };
 
-  result.retrieve = function(/*...*/ 
-) {
+  result.retrieve = function (key) {
     // TODO: implement `retrieve`
+    var index = getIndexBelowMaxForKey(key, storageLimit);
+    var bucket = storage[index];
+    for (var i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        return bucket[i][1];
+      }
+    }
+    console.log('Item not exist');
   };
 
-  result.remove = function(/*...*/ 
-) {
+  result.remove = function (key) {
     // TODO: implement `remove`
+    var index = getIndexBelowMaxForKey(key, storageLimit);
+    var bucket = storage[index];
+    for (var i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === key) {
+        bucket.splice(i, 1);
+        size--;
+        if (size < storageLimit * 0.25) {
+          result.rehash(storageLimit / 2);
+        }
+      }
+    }
+    return storage;
+  };
+
+  result.rehash = function (newLimit) {
+    var oldStorage = storage;
+    storageLimit = newLimit;
+    storage = [];
+    size = 0;
+    for (var i = 0; i < oldStorage.length; i++) {
+      var bucket = oldStorage[i];
+      if (!bucket) {
+        continue;
+      }
+      for (var j = 0; j < bucket.length; j++) {
+        var item = bucket[j];
+        result.insert(item[0], item[1]);
+      }
+    }
   };
 
   return result;
 };
+
+var hashTable = makeHashTable();
+console.log(hashTable.insert('cat', 'meow'));
+console.log(hashTable.insert('dog', 'bark'));
+// console.log(hashTable.retrieve('dog'));
+// hashTable.retrieve('fish');
+// console.log(hashTable.remove('dog'));
+console.log(hashTable.insert('fish', 'bubble'));
+console.log('Resize happend');
+console.log(hashTable.insert('rabbit', 'jump'));
+console.log(hashTable.insert('lion', 'roar'));
+// console.log('')
