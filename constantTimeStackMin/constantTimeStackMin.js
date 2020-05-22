@@ -19,8 +19,8 @@
  */
 var Stack = function () {
   this.storage = {};
-  this.minValue = Number.MIN_VALUE;
-  this.secondMin = Number.MIN_VALUE;
+  this.minValue = Number.MAX_VALUE;
+  this.secondMin = Number.MAX_VALUE;
   this.end = 0;
 };
 
@@ -56,10 +56,23 @@ Stack.prototype.min = function () {
   return this.minValue;
 };
 
-var newstack = new Stack();
-newstack.size();
-console.log(newstack.size());
-newstack.push(3);
-newstack.push(4);
-console.log(newstack.storage);
-console.log(newstack.pop());
+var stack = new Stack();
+stack.push(200);
+// we just added an element so the stack's min should be 200
+console.log(stack.min() + ' should be 200');
+
+stack.push(100);
+// we just added _another_ element and the stack's min should now be 100
+console.log(stack.min() + ' should be 100');
+
+stack.pop();
+// we just removed an element so the stack's min should be 200 again
+console.log(stack.min() + ' should be 100');
+
+stack.push(50);
+stack.push(50);
+// we just added _another_ element and the stack's min should now be 50
+console.log(stack.min() + ' should be 50');
+// even if we pop the lowest value, the stack should remember duplicates
+stack.pop();
+console.log(stack.min() + ' should be 50');
