@@ -19,7 +19,8 @@
  */
 var Stack = function () {
   this.storage = {};
-  //   this.start = 0;
+  this.minValue = Number.MIN_VALUE;
+  this.secondMin = Number.MIN_VALUE;
   this.end = 0;
 };
 
@@ -28,11 +29,18 @@ var Stack = function () {
 Stack.prototype.push = function (value) {
   this.end++;
   this.storage[this.end] = value;
+  if (value <= this.minValue) {
+    this.secondMin = this.minValue;
+    this.minValue = value;
+  }
 };
 
 // remove an item from the top of the stack
 Stack.prototype.pop = function () {
   var top = this.storage[this.end];
+  if (this.minValue === top) {
+    this.minValue = this.secondMin;
+  }
   delete this.storage[this.end];
   this.end--;
   return top;
@@ -45,13 +53,7 @@ Stack.prototype.size = function () {
 
 // return the minimum value in the stack
 Stack.prototype.min = function () {
-  var min = this.storage[this.end];
-  for (var key in this.storage) {
-    if (this.storage[key] < min) {
-      min = this.storage[key];
-    }
-  }
-  return min;
+  return this.minValue;
 };
 
 var newstack = new Stack();
