@@ -20,6 +20,9 @@
 
 var rockPaperScissors = function (n) {
   // TODO: your solution here
+  if (n === undefined) {
+    n = 3;
+  }
   var container = ['R', 'P', 'S'];
   if (n === 0) return [];
   var result = [];
@@ -36,4 +39,4 @@ var rockPaperScissors = function (n) {
   return result;
 };
 
-console.log(rockPaperScissors(4));
+console.log(rockPaperScissors());
