@@ -39,16 +39,24 @@ var hasCycle = function (linkedList) {
   // TODO: implement me!
   //node.visited = false;
   //visiting null, return false
-  if (linkedList === null) {
-    return false;
+  // if (linkedList === null) {
+  //   return false;
+  // }
+  // //visting a true node, return true
+  // if (linkedList.visited === true) {
+  //   return true;
+  // }
+  while (linkedList.next !== null) {
+    linkedList.visited = true;
+    linkedList = linkedList.next;
+    if (linkedList.visited === true) {
+      return true;
+    }
   }
-  //visting a true node, return true
-  if (linkedList.visited === true) {
-    return true;
-  }
-  linkedList.visited = true;
+  return false;
+
   //traverse the list, node.visited = true
-  return hasCycle(linkedList.next);
+  // return hasCycle(linkedList.next);
 };
 
 var nodeA = Node('A');
@@ -61,5 +69,5 @@ nodeE.next = nodeB;
 console.log(hasCycle(nodeA)); // => true
 
 var node = Node('1');
-var node2 = (node.next = node);
+var node2 = (node.next = Node('2'));
 console.log(hasCycle(node));
