@@ -34,12 +34,18 @@
 
 var bubbleSort = function (array) {
   // Your code here.
+  var swapped = false;
   for (var j = 0; j < array.length - 1; j++) {
     for (var i = 0; i < array.length - 1; i++) {
       if (array[i] > array[i + 1]) {
         switchfunc(i, i + 1, array);
+        swapped = true;
       }
     }
+    if (swapped === false) {
+      break;
+    }
+    swapped = false;
   }
 
   return array;
