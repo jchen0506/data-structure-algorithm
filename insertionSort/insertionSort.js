@@ -45,16 +45,31 @@ var testingTransform = function (array) {
   return transform;
 };
 
-var insertionSort = function (array) {
+var insertionSort = function (array, comparator) {
+  var comparator =
+    comparator === undefined
+      ? function (a, b) {
+          return a.value - b.value;
+        }
+      : comparator;
   // Your code goes here. Feel free to add helper functions if needed.
   for (var i = 0; i < array.length - 1; i++) {
     for (var j = i + 1; j > 0; j--) {
-      if (array[j - 1].value > array[j].value) {
+      if (comparator(array[j - 1], array[j]) > 0) {
         swap(j - 1, j, array);
       }
     }
   }
   return array;
+};
+var comparator1 = function (a, b) {
+  return b.i - a.i;
+};
+var comparator2 = function (a, b) {
+  var aIsOdd = a.value & 1;
+  var bIsOdd = b.value & 1;
+
+  return aIsOdd - bIsOdd;
 };
 
 var swap = function (first, second, array) {
@@ -62,6 +77,9 @@ var swap = function (first, second, array) {
   array[first] = array[second];
   array[second] = temp;
 };
-var array1 = [-1, 10, 2, 1, 3, 1, 3, 5, 6];
-console.log(testingTransform(array1));
+var array1 = [1, 2, 3, 4, 5];
+// console.log(testingTransform(array1));
+console.log(insertionSort(testingTransform(array1), comparator1));
 console.log(insertionSort(testingTransform(array1)));
+var array2 = [0, 1, 2, 3, 4, 5];
+console.log(insertionSort(testingTransform(array2), comparator2));
