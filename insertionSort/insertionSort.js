@@ -46,12 +46,7 @@ var testingTransform = function (array) {
 };
 
 var insertionSort = function (array, comparator) {
-  var comparator =
-    comparator === undefined
-      ? function (a, b) {
-          return a.value - b.value;
-        }
-      : comparator;
+  var comparator = comparator === undefined ? nativeComparator : comparator;
   // Your code goes here. Feel free to add helper functions if needed.
   for (var i = 0; i < array.length - 1; i++) {
     for (var j = i + 1; j > 0; j--) {
@@ -71,15 +66,23 @@ var comparator2 = function (a, b) {
 
   return aIsOdd - bIsOdd;
 };
-
+var nativeComparator = function (a, b) {
+  if (a.value === null && b.value === null) return 0;
+  if (a.value === null) return 1;
+  if (b.value === null) return -1;
+  if (a.value > b.value) {
+    // console.log('a >b');
+    return 1;
+  } else {
+    return -1;
+  }
+};
 var swap = function (first, second, array) {
   var temp = array[first];
   array[first] = array[second];
   array[second] = temp;
 };
-var array1 = [1, 2, 3, 4, 5];
-// console.log(testingTransform(array1));
-console.log(insertionSort(testingTransform(array1), comparator1));
-console.log(insertionSort(testingTransform(array1)));
-var array2 = [0, 1, 2, 3, 4, 5];
-console.log(insertionSort(testingTransform(array2), comparator2));
+var array = [0, 1, 'a', ';', [], {}, undefined, null];
+
+console.log(insertionSort(testingTransform(array)));
+// [{ value: 0, i: 0 }, { value: [], i: 4 }, { value: 1, i: 1 }, { value: ';', i: 3 }, { value: {}, i: 5 }, { value: 'a', i: 2 }, { value: undefined, i: 6 }, { value: null, i: 7 }]
