@@ -110,8 +110,16 @@ var mergeSort = function (array) {
 };
 
 var merge = function (array, low, mid, high) {
-  var arrayleft = array.slice(low, mid + 1);
-  var arrayright = array.slice(mid + 1);
+  var leftlength = mid - low + 1;
+  var rightlength = high - mid;
+  var arrayleft = [];
+  var arrayright = [];
+  for (var i = 0; i < leftlength; i++) {
+    arrayleft[i] = array[i + low];
+  }
+  for (var j = 0; j < rightlength; j++) {
+    arrayright[j] = array[mid + j + 1];
+  }
   var pointer1 = 0;
   var pointer2 = 0;
   var i = low;
@@ -138,6 +146,3 @@ var merge = function (array, low, mid, high) {
     i++;
   }
 };
-
-// var array = [2, 1, 5, 3, 0, 4];
-// console.log(mergeSort(array));
