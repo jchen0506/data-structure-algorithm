@@ -33,9 +33,11 @@
 
 var shuffleDeck = function (deck) {
   // Your code here
-  var randIndex = Math.floor(Math.random() * 52);
-  for (var i = 0; i < deck.length; i++) {
-    swap(i, randIndex, deck);
+  var i = deck.length - 1;
+  while (i > 0) {
+    var randIndex = Math.floor(Math.random() * i);
+    swap(randIndex, i, deck);
+    i--;
   }
   return deck;
 };
@@ -65,3 +67,35 @@ var orderedDeck = function () {
 var deck = orderedDeck();
 // console.log(deck);
 console.log(shuffleDeck(deck));
+
+var cardPositionCounts = {};
+for (var i = 0; i < deck.length; i++) {
+  var cardPosition = (cardPositionCounts[deck[i]] = {});
+  for (var j = 0; j < deck.length; j++) {
+    cardPosition[j] = 0;
+  }
+}
+// ...over the course of five hundred shuffles
+var iterations = 52 * 10;
+for (var i = 0; i < iterations; i++) {
+  deck = orderedDeck();
+  var randomDeck = shuffleDeck(deck);
+  for (var j = 0; j < randomDeck.length; j++) {
+    cardPositionCounts[randomDeck[j]][j] += 1;
+  }
+}
+
+deck = orderedDeck();
+// The expected number of occurrences for a particular card in a particular index is
+// iterations/52 = 10
+var expected = 10;
+var chi2 = 0;
+for (var i = 0; i < deck.length; i++) {
+  var cardPosition = cardPositionCounts[deck[i]];
+  for (var j = 0; j < deck.length; j++) {
+    // calculate chi-squared test
+    chi2 += Math.pow(cardPosition[j] - expected, 2) / expected;
+  }
+}
+console.log(chi2);
+// console.dir(cardPositionCounts);
