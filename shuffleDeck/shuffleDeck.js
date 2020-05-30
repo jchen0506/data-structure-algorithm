@@ -31,22 +31,37 @@
  *   See https://www.dartmouth.edu/~chance/teaching_aids/books_articles/Mann.pdf .
  */
 
-var shuffleDeck = function(deck) {
+var shuffleDeck = function (deck) {
   // Your code here
+  var randIndex = Math.floor(Math.random() * 52);
+  for (var i = 0; i < deck.length; i++) {
+    swap(i, randIndex, deck);
+  }
+  return deck;
+};
+
+var swap = function (i, j, array) {
+  var temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
 };
 
 // Ordered deck generator provided for your testing convenience
 // (You may alter this function, but an unaltered copy will be used for tests.)
-var orderedDeck = function() {
-  var suits = [ '♥', '♣', '♠', '♦' ];
-  var values = [ 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K' ];
+var orderedDeck = function () {
+  var suits = ['♥', '♣', '♠', '♦'];
+  var values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
   var deck = [];
 
-  suits.forEach(function(suit) {
-    values.forEach(function(value) {
+  suits.forEach(function (suit) {
+    values.forEach(function (value) {
       deck.push(value + suit);
     });
   });
 
   return deck;
 };
+
+var deck = orderedDeck();
+// console.log(deck);
+console.log(shuffleDeck(deck));
