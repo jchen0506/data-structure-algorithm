@@ -139,10 +139,5 @@ var merge = function (array, low, mid, high) {
   }
 };
 
-var array = [2, 1, 5, 3, 0, 4];
-
-// console.log(merge(array, 0, 3, 6));
+// var array = [2, 1, 5, 3, 0, 4];
 // console.log(mergeSort(array));
-// var array2 = [3, 2, 10, 5, 1];
-// // console.log(merge(array1, array2));
-console.log(mergeSort(array));
