@@ -97,47 +97,52 @@
 
 var mergeSort = function (array) {
   // Your code here.
-  var result = [];
-
-  if (array.length === 1) {
-    result.push(array[0]);
-    return result;
-  }
-  var mid = Math.floor(array.length / 2);
-  //split
-  var arrayleft = array.slice(0, mid);
-  console.log(arrayleft);
-  var arrayright = array.slice(mid);
-  console.log(arrayright);
-  // //sort
-  // arrayleft = mergeSort(arrayleft);
-  // arrayright = mergeSort(arrayright);
-  //merge
-  result = merge(arrayleft, arrayright);
-  return result;
+  var sort = function (array, low, high) {
+    if (low < high) {
+      var mid = Math.floor((low + high) / 2);
+      sort(array, low, mid);
+      sort(array, mid + 1, high);
+      merge(array, low, mid, high);
+    }
+  };
+  sort(array, 0, array.length - 1);
+  return array;
 };
 
-var merge = function (array1, array2) {
-  var result = [];
-  var n = array1.length + array2.length - 1;
+var merge = function (array, low, mid, high) {
+  var arrayleft = array.slice(low, mid + 1);
+  var arrayright = array.slice(mid + 1);
   var pointer1 = 0;
   var pointer2 = 0;
+  var i = low;
 
-  for (var i = 0; i < n; i++) {
-    if (array1[pointer1] > array2[pointer2]) {
-      result.push(array2[pointer2]);
-      pointer2++;
-    } else {
-      result.push(array1[pointer1]);
+  while (pointer1 < arrayleft.length && pointer2 < arrayright.length) {
+    if (arrayleft[pointer1] < arrayright[pointer2]) {
+      array[i] = arrayleft[pointer1];
       pointer1++;
+    } else {
+      array[i] = arrayright[pointer2];
+      pointer2++;
     }
+    i++;
   }
-  return result;
+
+  while (pointer1 < arrayleft.length) {
+    array[i] = arrayleft[pointer1];
+    pointer1++;
+    i++;
+  }
+  while (pointer2 < arrayright.length) {
+    array[i] = arrayright[pointer2];
+    pointer2++;
+    i++;
+  }
 };
 
-// var array1 = [3, 5, 6, 9];
-// var array2 = [1, 8, 10];
+var array = [2, 1, 5, 3, 0, 4];
 
-var array = [3, 2, 10, 5, 1];
-// console.log(merge(array1, array2));
+// console.log(merge(array, 0, 3, 6));
+// console.log(mergeSort(array));
+// var array2 = [3, 2, 10, 5, 1];
+// // console.log(merge(array1, array2));
 console.log(mergeSort(array));
