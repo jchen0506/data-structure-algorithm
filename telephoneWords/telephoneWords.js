@@ -43,20 +43,23 @@ var phoneDigitsToLetters = {
 var telephoneWords = function (digitString) {
   // TODO: return every combination that can be spelled on a phone with these digits
   var result = [];
-  var combinations = function (combination) {
-    if (combination.length === 4) {
+  var digit = digitString.split('');
+  var combination = '';
+  var combinations = function (combination, digit) {
+    if (digit.length === 0) {
       result.push(combination);
       return;
     } else {
-      for (var key in phoneDigitsToLetters) {
-        var digitString = phoneDigitsToLetters[key].split('');
-        for (var i = 0; i < digitString.length; i++) {
-          combinations(combination + digitString[i]);
+      for (var j = 0; j < digit.length; j++) {
+        var currentDigit = digit[j];
+        var currentString = phoneDigitsToLetters[currentDigit].split('');
+        for (var i = 0; i < currentString.length; i++) {
+          combinations(combination + currentString[i], digit.slice(1))
         }
       }
     }
   };
-  combinations('');
+  combinations('', digit);
   return result;
 };
 
