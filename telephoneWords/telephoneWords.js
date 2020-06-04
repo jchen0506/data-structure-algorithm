@@ -50,12 +50,10 @@ var telephoneWords = function (digitString) {
       result.push(combination);
       return;
     } else {
-      for (var j = 0; j < digit.length; j++) {
-        var currentDigit = digit[j];
-        var currentString = phoneDigitsToLetters[currentDigit].split('');
-        for (var i = 0; i < currentString.length; i++) {
-          combinations(combination + currentString[i], digit.slice(1))
-        }
+      var currentDigit = digit[0];
+      var currentString = phoneDigitsToLetters[currentDigit].split('');
+      for (var i = 0; i < currentString.length; i++) {
+        combinations(combination + currentString[i], digit.slice(1))
       }
     }
   };
