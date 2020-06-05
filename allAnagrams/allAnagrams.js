@@ -19,22 +19,26 @@ var allAnagrams = function (string) {
 
   var helper = function (anagram, array) {
     if (anagram.length === string.length) {
-      result.push(anagram.join(''));
+      var oneanagram = anagram.join('');
+      if (result.indexOf(oneanagram) === -1) {
+        result.push(oneanagram);
+      }
     } else {
       for (var i = 0; i < array.length; i++) {
         var current = array[i];
-        anagram.push(array[i]);
+        anagram.push(current);
         array.splice(i, 1);
         helper(anagram, array);
         array.splice(i, 0, current);
-        anagram.pop(array[i]);
+        anagram.pop(current);
       }
     }
   };
   helper([], array);
+
   return result;
 };
 
-console.log(allAnagrams('abcd'));
+console.log(allAnagrams('apps'));
 //abcdabcd
 // abcd, abdc, acbd, acdb,
