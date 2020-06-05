@@ -20,9 +20,9 @@ var allAnagrams = function (string) {
   var helper = function (anagram, array) {
     if (anagram.length === string.length) {
       var oneanagram = anagram.join('');
-      if (result.indexOf(oneanagram) === -1) {
-        result.push(oneanagram);
-      }
+      // if (result.indexOf(oneanagram) === -1) {
+      result.push(oneanagram);
+      // }
     } else {
       for (var i = 0; i < array.length; i++) {
         var current = array[i];
