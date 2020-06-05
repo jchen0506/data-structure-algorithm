@@ -39,6 +39,5 @@ var allAnagrams = function (string) {
   return result;
 };
 
-console.log(allAnagrams('apps'));
 //abcdabcd
 // abcd, abdc, acbd, acdb,
