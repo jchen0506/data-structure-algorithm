@@ -7,20 +7,34 @@
  */
 
 /**
-  * example usage:
-  * var anagrams = allAnagrams('abc');
-  * console.log(anagrams); // [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
-  */
+ * example usage:
+ * var anagrams = allAnagrams('abc');
+ * console.log(anagrams); // [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
+ */
 
 var allAnagrams = function (string) {
   // Your code here.
   var result = [];
-  var newstring = string + string;
-  var array = newstring.split('');
-  for (var i = 0; i < newstring.length - string.length + 1; i += string.length) {
-    result.push(array.splice(i, string.length).join(''))
-  }
+  var array = string.split(''); //['a','b','c','d']
+
+  var helper = function (anagram, array) {
+    if (anagram.length === string.length) {
+      result.push(anagram.join(''));
+    } else {
+      for (var i = 0; i < array.length; i++) {
+        var current = array[i];
+        anagram.push(array[i]);
+        array.splice(i, 1);
+        helper(anagram, array);
+        array.splice(i, 0, current);
+        anagram.pop(array[i]);
+      }
+    }
+  };
+  helper([], array);
   return result;
 };
 
-console.log(allAnagrams('abc'));
+console.log(allAnagrams('abcd'));
+//abcdabcd
+// abcd, abdc, acbd, acdb,
