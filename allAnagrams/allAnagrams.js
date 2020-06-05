@@ -16,13 +16,14 @@ var allAnagrams = function (string) {
   // Your code here.
   var result = [];
   var array = string.split(''); //['a','b','c','d']
-
+  var appearance = {};
   var helper = function (anagram, array) {
     if (anagram.length === string.length) {
       var oneanagram = anagram.join('');
-      // if (result.indexOf(oneanagram) === -1) {
-      result.push(oneanagram);
-      // }
+      if (appearance[oneanagram] === undefined) {
+        result.push(oneanagram);
+        appearance[oneanagram] = 1;
+      }
     } else {
       for (var i = 0; i < array.length; i++) {
         var current = array[i];
@@ -35,9 +36,9 @@ var allAnagrams = function (string) {
     }
   };
   helper([], array);
-
   return result;
 };
 
+console.log(allAnagrams('apps'));
 //abcdabcd
 // abcd, abdc, acbd, acdb,
