@@ -28,23 +28,20 @@ var makeChange = function (total) {
   //take the larget coin that smaller than total every time, if any remainder left, add penny
   //chose first coin, the way to make total is the number of ways (total-fisrt) moneny + 1;
   var coins = [1, 2, 5, 10, 20, 50, 100, 200];
-  var result = 0;
-  var combination = function (total) {
-    for (var i = 0; i < coins.length; i++) {
-      var current = coins[i];
-      if (total < 0) {
-        return;
-      } else if (total === 0) {
-        return result++;
-      } else {
-        combination(total - current);
-      }
+  var cache =[];
+  for (var x = 0; x <=total; x++){
+    cache[x]=0;
+  }
+  cache[0]=1
+  for (var i = 0; i<coins.length; i++){
+    var currentcoin=coins[i];
+    for (var j = currentcoin; j<=total; j++){
+      cache[j]+=cache[j-currentcoin]
     }
-  };
-  combination(total);
-  return result;
+  }
+  return cache[total];
 };
 
-console.log(makeChange(5));
-
+console.log(makeChange(20));
+//1 2 2 / 2 2 1/2 1 2
 //5=1+1+1+1+1=2+1+1+1=2+2+1=5
