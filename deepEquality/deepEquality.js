@@ -12,16 +12,19 @@
  *
  */
 var deepEquals = function (apple, orange) {
-  var appleKey = Object.keys(apple);
-  var orangeKey = Object.keys(orange);
-  var isDeepEqual = true;
+  if (apple === orange) {
+    return true;
+  }
+  var appleKey = Object.keys(apple).sort();
+  var orangeKey = Object.keys(orange).sort();
 
   if (appleKey.length !== orangeKey.length) {
-    isDeepEqual = false;
+    return false;
   } else {
     for (var i = 0; i < appleKey.length; i++) {
       if (appleKey[i] !== orangeKey[i]) {
         isDeepEqual = false;
+        return false;
       } else if (
         (typeof apple[appleKey[i]] === 'object' &&
           typeof orange[orangeKey[i]] !== 'object') ||
@@ -34,12 +37,12 @@ var deepEquals = function (apple, orange) {
         typeof orange[orangeKey[i]] !== 'object' &&
         apple[appleKey[i]] !== orange[orangeKey[i]]
       ) {
-        isDeepEqual = false;
+        return false;
       } else {
-        isDeepEqual = deepEquals(apple[appleKey[i]], orange[orangeKey[i]]);
+        return deepEquals(apple[appleKey[i]], orange[orangeKey[i]]);
       }
     }
-    return isDeepEqual;
+    return true;
   }
 };
 
@@ -58,5 +61,10 @@ var deepEquals = function (apple, orange) {
   }
 }
 */
-console.log(deepEquals({ a: 1, b: { c: 3 } }, { a: 1, b: { c: { d: 5 } } }));
-console.log(deepEquals({ a: 1, b: { c: 5 } }, { a: 1, b: { c: 5 } }));
+// console.log(deepEquals({ a: 1, b: { c: 3 } }, { a: 1, b: { c: { d: 5 } } }));
+// console.log(deepEquals({ a: 1, b: { c: 5 } }, { a: 1, b: { c: 5 } }));
+// console.log(deepEquals({ a: 'foo' }, { a: 'foo' }));
+
+var a = { foo: 'bar', biz: 'baz' };
+var b = { foo: 'bar' };
+console.log(deepEquals(a, b));
