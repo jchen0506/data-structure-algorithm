@@ -37,24 +37,25 @@ var Tree = function (value) {
 
 Tree.prototype.BFSelect = function (filter) {
   // return an array of values for which the function filter(value, depth) returns true
-  var bfsStack = [];
   var result = [];
+  var queue = [];
   var bfs = function (node) {
-    // bfsStack.push(node);
     if (node === null) {
       return;
     }
 
-    bfsStack.push(node);
+    queue.push({ node: node, depth: 0 });
 
-    while (bfsStack.length > 0) {
-      var parent = bfsStack.pop();
-      if (filter(parent.value, depth)) {
-        result.push(parent.value);
+    while (queue.length > 0) {
+      var visitednode = queue[0].node;
+      var currentdepth = queue[0].depth;
+      if (filter(visitednode.value, currentdepth)) {
+        result.push(visitednode.value);
       }
-      for (var i = parent.children.length - 1; i >= 0; i--) {
-        bfsStack.push(parent.children[i]);
+      for (var i = 0; i < visitednode.children.length; i++) {
+        queue.push({ node: visitednode.children[i], depth: currentdepth + 1 });
       }
+      queue.shift();
     }
   };
   bfs(this);
@@ -127,3 +128,10 @@ console.log(
     return value % 2;
   })
 );
+
+console.log(
+  root1.BFSelect(function (value, depth) {
+    return depth === 1;
+  })
+);
+// [2, 3])
