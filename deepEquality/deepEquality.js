@@ -11,39 +11,25 @@
  * don't worry about handling cyclical object structures.
  *
  */
-var deepEquals = function (apple, orange) {
-  if (apple === orange) {
-    return true;
-  }
-  var appleKey = Object.keys(apple).sort();
-  var orangeKey = Object.keys(orange).sort();
 
-  if (appleKey.length !== orangeKey.length) {
-    return false;
-  } else {
-    for (var i = 0; i < appleKey.length; i++) {
-      if (appleKey[i] !== orangeKey[i]) {
-        isDeepEqual = false;
-        return false;
-      } else if (
-        (typeof apple[appleKey[i]] === 'object' &&
-          typeof orange[orangeKey[i]] !== 'object') ||
-        (typeof apple[appleKey[i]] !== 'object' &&
-          typeof orange[orangeKey[i]] === 'object')
+var deepEquals = function (apple, orange) {
+  var result = true;
+  var akey = Object.keys(apple);
+  var okey = Object.keys(orange);
+  if (akey.length !== okey.length) return false;
+  else {
+    for (var i = 0; i < akey.length; i++) {
+      if (
+        typeof apple[akey[i]] === 'object' &&
+        typeof orange[akey[i]] === 'object'
       ) {
-        return false;
-      } else if (
-        typeof apple[appleKey[i]] !== 'object' &&
-        typeof orange[orangeKey[i]] !== 'object' &&
-        apple[appleKey[i]] !== orange[orangeKey[i]]
-      ) {
-        return false;
+        result = result && deepEquals(apple[akey[i]], orange[akey[i]]);
       } else {
-        return deepEquals(apple[appleKey[i]], orange[orangeKey[i]]);
+        result = result && apple[akey[i]] === orange[akey[i]];
       }
     }
-    return true;
   }
+  return result;
 };
 
 /*
@@ -61,10 +47,11 @@ var deepEquals = function (apple, orange) {
   }
 }
 */
-// console.log(deepEquals({ a: 1, b: { c: 3 } }, { a: 1, b: { c: { d: 5 } } }));
-// console.log(deepEquals({ a: 1, b: { c: 5 } }, { a: 1, b: { c: 5 } }));
-// console.log(deepEquals({ a: 'foo' }, { a: 'foo' }));
+console.log(deepEquals({ a: 1, b: { c: 3 } }, { a: 1, b: { c: { d: 5 } } }));
+console.log(deepEquals({ a: 1, b: { c: 5 } }, { a: 1, b: { c: 5 } }));
+console.log(deepEquals({ a: 'foo' }, { a: 'foo' }));
 
 var a = { foo: 'bar', biz: 'baz' };
-var b = { foo: 'bar' };
+
+var b = { biz: 'baz', foo: 'bar' };
 console.log(deepEquals(a, b));
