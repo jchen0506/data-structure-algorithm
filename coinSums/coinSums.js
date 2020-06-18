@@ -27,6 +27,10 @@ makeChange(2) === 2
 var makeChange = function (total) {
   //take the larget coin that smaller than total every time, if any remainder left, add penny
   //chose first coin, the way to make total is the number of ways (total-fisrt) moneny + 1;
+
+  //0,1,2,.......,total
+  //pick a coin<total
+  //[.............count at total=1+count at[total-coin]]
   var coins = [1, 2, 5, 10, 20, 50, 100, 200];
   var cache =[];
   for (var x = 0; x <=total; x++){

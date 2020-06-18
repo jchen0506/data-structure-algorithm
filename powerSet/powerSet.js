@@ -26,13 +26,10 @@ var powerSet = function(str) {
   for (var i=0; i < str.length; i++){
     result.push(['',array[i]]);
   }
-  // console.log(result)
   for ( var j=result.length-1;j>0;j--){
-    // result[j].push(array[j]);
     var last =result[j];
     var first= result[j-1];
-    // console.log(last);
-    // console.log(first);
+
     for (var k =1; k<last.length;k++){
       first.push( first[0].concat(last[k]))
       first.push( first[1].concat(last[k]));
@@ -42,4 +39,4 @@ var powerSet = function(str) {
 
 };
 
-console.log(powerSet('abc'));
+console.log(powerSet('aaaabbbb'));
