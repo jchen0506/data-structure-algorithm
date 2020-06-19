@@ -63,7 +63,7 @@ var commonCharacters = function () {
       result.push(char);
     }
   }
-  return result;
+  return result.join('');
 };
 
 var result = commonCharacters('aeexivou', 'aegeihobu');
