@@ -34,35 +34,47 @@
 'use strict';
 
 var compose = function () {
-  console.log(arguments[0]);
-  console.log(arguments.length);
-  var helper = function (index) {
-    if (arguments.length - 1 === index) {
-      return arguments[index].bind(this);
+  var args = Array.prototype.slice.call(arguments);
+
+  return function () {
+    var currentargs = Array.prototype.slice.call(arguments);
+    var result = args[args.length - 1].apply(null, currentargs);
+    for (var i = args.length - 2; i >= 0; i--) {
+      result = args[i](result);
     }
-    return arguments[index].bind(this, helper[index + 1]);
+    return result;
   };
-  return helper(0);
 };
 
-var pipe = function () {};
+var pipe = function () {
+  var args = Array.prototype.slice.call(arguments);
 
-//Compose Example
-var greet = function (name) {
-  return 'hi: ' + name;
+  return function () {
+    var currentargs = Array.prototype.slice.call(arguments);
+    var result = args[0].apply(null, currentargs);
+    for (var i = 1; i < args.length; i++) {
+      result = args[i](result);
+    }
+    return result;
+  };
 };
-var exclaim = function (statement) {
-  return statement.toUpperCase() + '!';
-};
-var welcome = compose(greet, exclaim);
-welcome('phillip'); // 'hi: PHILLIP!'
+
+// //Compose Example
+// var greet = function (name) {
+//   return 'hi: ' + name;
+// };
+// var exclaim = function (statement) {
+//   return statement.toUpperCase() + '!';
+// };
+// var welcome = compose(greet, exclaim);
+// console.log(welcome('phillip')); // 'hi: PHILLIP!'
 
 //Pipe Example:
-// var add2 = function (number) {
-//   return number + 2;
-// };
-// var multiplyBy3 = function (number) {
-//   return number * 3;
-// };
-// pipe(add2, multiplyBy3)(5); // 21
-// pipe(add2, multiplyBy3, multiplyBy3)(5); // 63
+var add2 = function (number) {
+  return number + 2;
+};
+var multiplyBy3 = function (number) {
+  return number * 3;
+};
+console.log(pipe(add2, multiplyBy3)(5)); // 21
+console.log(pipe(add2, multiplyBy3, multiplyBy3)(5)); // 63
