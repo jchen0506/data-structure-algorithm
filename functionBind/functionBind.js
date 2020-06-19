@@ -29,10 +29,9 @@ var bind = function () {
   var func = args[0];
   var context = args[1];
   var restargs = args.slice(2);
-  console.log(context);
-  console.log(restargs);
   return function () {
-    return func.apply(context, restargs);
+    var currentArgs = restargs.concat(Array.prototype.slice.call(arguments));
+    return func.apply(context, currentArgs);
   };
 };
 
@@ -42,10 +41,10 @@ var alice = {
     console.log(this.name);
   },
 };
-var boundShout = bind(alice.shout, alice);
-boundShout(); // alerts 'alice'
-boundShout = bind(alice.shout, { name: 'bob' });
-boundShout(); // alerts 'bob'
+// var boundShout = bind(alice.shout, alice);
+// boundShout(); // alerts 'alice'
+// boundShout = bind(alice.shout, { name: 'bob' });
+// boundShout(); // alerts 'bob'
 
 /*
  * Function.prototype.bind:
@@ -73,5 +72,24 @@ boundShout(); // alerts 'bob'
  */
 
 Function.prototype.bind = function () {
-  // TODO: Your code here
+  var args = Array.prototype.slice.call(arguments);
+  var func = this;
+  var prevArgs = args.slice(1);
+  var context = args[0];
+  return function () {
+    var currentArgs = prevArgs.concat(Array.prototype.slice.call(arguments));
+    return func.apply(context, currentArgs);
+  };
 };
+
+var boundShout = alice.shout.bind(alice);
+boundShout(); // alerts 'alice'
+boundShout = alice.shout.bind({ name: 'bob' });
+boundShout(); // alerts 'bob'
+
+var func = function (a, b) {
+  return a + b;
+};
+var boundFunc = func.bind(null, 'foo');
+var result = boundFunc('bar');
+console.log(result === 'foobar'); // true
