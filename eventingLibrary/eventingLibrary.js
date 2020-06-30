@@ -22,31 +22,46 @@
 
 var mixEvents = function (obj) {
   obj.on = function (event, callback) {
-    obj.on.event = callback;
+    if (obj.on[event]) {
+      obj.on[event].push(callback);
+    } else {
+      obj.on[event] = [];
+      obj.on[event].push(callback);
+    }
   };
+
   obj.trigger = function (event) {
     var restArgs = Array.prototype.slice.call(arguments, 1);
-    if (obj.on.event) {
-      return obj.on.event(restArgs);
+
+    if (obj.on[event]) {
+      for (var i = 0; i < obj.on[event].length; i++) {
+        obj.on[event][i].apply(this, restArgs);
+      }
     }
   };
   return obj;
 };
 
-//test without argument
-var obj = mixEvents({ name: 'Alice', age: 30 });
-obj.on('ageChange', function () {
-  // On takes an event name and a callback function
-  console.log('Age changed');
+var car = mixEvents({
+  color: 'red',
+  'insurance-premium': 'costly',
+  speed: 0,
+  radio: 'off',
 });
 
-console.log(obj);
-obj.age++;
-obj.trigger('ageChange'); //expect console log Age changed
-
-//test with argument
-
-obj.on('ageChangeWithArgs', function (n) {
-  console.log('Age changed:' + n);
+// Both of these should get called when we trigger 'green-light'.
+car.on('green-light', function () {
+  car.speed = 100;
 });
-obj.trigger('ageChange', 5); //expect  Age changed: 5
+
+car.on('green-light', function () {
+  car.radio = 'blaring';
+});
+
+console.log(car.speed);
+console.log(car.radio);
+
+car.trigger('green-light');
+console.log('-----After Trigger-----');
+console.log(car.speed);
+console.log(car.radio);
