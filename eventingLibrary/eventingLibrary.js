@@ -20,7 +20,33 @@
  * - It is not necessary to write a way to remove listeners.
  */
 
-var mixEvents = function(obj) {
-  // TODO: Your code here
+var mixEvents = function (obj) {
+  obj.on = function (event, callback) {
+    obj.on.event = callback;
+  };
+  obj.trigger = function (event) {
+    var restArgs = Array.prototype.slice.call(arguments, 1);
+    if (obj.on.event) {
+      return obj.on.event(restArgs);
+    }
+  };
   return obj;
 };
+
+//test without argument
+var obj = mixEvents({ name: 'Alice', age: 30 });
+obj.on('ageChange', function () {
+  // On takes an event name and a callback function
+  console.log('Age changed');
+});
+
+console.log(obj);
+obj.age++;
+obj.trigger('ageChange'); //expect console log Age changed
+
+//test with argument
+
+obj.on('ageChangeWithArgs', function (n) {
+  console.log('Age changed:' + n);
+});
+obj.trigger('ageChange', 5); //expect  Age changed: 5
