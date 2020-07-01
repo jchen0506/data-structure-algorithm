@@ -10,7 +10,7 @@
  * parent of the 3rd and 4th nodes, and the 2nd node will be the parent of the 5th and
  * 6th nodes. In a specific kind of binary heap, the binary min heap, every node is
  * less than its immediate children:
- * 
+ *
  *          0
  *     1         2
  *   3   4     5   6
@@ -49,7 +49,6 @@
  * https://www.cs.usfca.edu/~galles/visualization/Heap.html
  */
 
-
 // Below is a binary heap whose nodes are integers. Its storage is an array and
 // its `getRoot` method is already written. `BinaryHeap`'s `this._compare` method is hard-coded to return
 // whether the fist element passed into it is less than the second. Use it when comparing nodes.
@@ -66,22 +65,75 @@
 // Extra extra credit: Implement `heapSort`. `heapSort` takes an array, constructs it into a `BinaryHeap`
 // and then iteratively returns the root of the `BinaryHeap` until its empty, thus returning a sorted array.
 
-
-function BinaryHeap () {
+function BinaryHeap() {
   this._heap = [];
   // this compare function will result in a minHeap, use it to make comparisons between nodes in your solution
-  this._compare = function (i, j) { return i < j };
+  this._compare = function (i, j) {
+    return i < j;
+  };
 }
+var swap = function (array, i, j) {
+  var temp = array[i];
+  array[i] = array[j];
+  array[j] = temp;
+};
 
+var heapifyUp = function (childrenIndex, heapTree) {
+  if (childrenIndex === 0) return;
+  var parentIndex = Math.floor((childrenIndex - 1) / 2);
+  if (heapTree[childrenIndex] < heapTree[parentIndex]) {
+    swap(heapTree, parentIndex, childrenIndex);
+  }
+
+  heapifyUp(parentIndex, heapTree);
+};
+
+var heapifyDown = function (parentIndex, heapTree) {
+  if (parentIndex === heapTree.length - 1) return;
+  var childrenIndex = [parentIndex * 2 + 1, parentIndex * 2 + 2];
+  if (
+    heapTree[childrenIndex[0]] &&
+    heapTree[childrenIndex[0]] < heapTree[parentIndex]
+  ) {
+    swap(heapTree, parentIndex, childrenIndex[0]);
+    parentIndex = childrenIndex[0];
+    heapifyDown(parentIndex, heapTree);
+  } else if (
+    heapTree[childrenIndex[1]] &&
+    heapTree[childrenIndex[1]] < heapTree[parentIndex]
+  ) {
+    swap(heapTree, parentIndex, childrenIndex[1]);
+    parentIndex = childrenIndex[1];
+    heapifyDown(parentIndex, heapTree);
+  } else {
+    return;
+  }
+};
 // This function works just fine and shouldn't be modified
 BinaryHeap.prototype.getRoot = function () {
   return this._heap[0];
-}
+};
 
 BinaryHeap.prototype.insert = function (value) {
   // TODO: Your code here
-}
+  this._heap.push(value);
+  heapifyUp(this._heap.length - 1, this._heap);
+};
 
 BinaryHeap.prototype.removeRoot = function () {
+  var min = this.getRoot();
   // TODO: Your code here
-}
+  swap(this._heap, 0, this._heap.length - 1);
+  this._heap.pop();
+  heapifyDown(0, this._heap);
+  return min;
+};
+
+var newHeap = new BinaryHeap();
+newHeap.insert(5);
+console.log(newHeap._heap);
+newHeap.insert(10);
+newHeap.insert(2);
+console.log(newHeap._heap);
+newHeap.removeRoot();
+console.log(newHeap._heap);
