@@ -75,11 +75,3 @@ Range.prototype.includes = function (val) {
   }
   return result;
 };
-
-var evenNumbers = new Range(2, 8, 2); // A range with the even numbers 2, 4, 6, and 8.
-evenNumbers.each(function (val) {
-  console.log(val + '!');
-});
-
-console.log(evenNumbers.size());
-console.log(evenNumbers.includes(2));
