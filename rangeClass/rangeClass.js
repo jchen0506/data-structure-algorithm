@@ -38,18 +38,48 @@
  * evenNumbers.includes(2) should be true, evenNumbers.includes(3) should be false
  */
 
-
-var Range = function(start, end, step) {
+var Range = function (start, end, step) {
+  if (start === undefined) {
+    return null;
+  } else if (end === undefined) {
+    this.startIndex = start;
+    this.endIndex = start;
+    this.step = 0;
+  } else if (step === undefined) {
+    this.startIndex = start;
+    this.endIndex = end;
+    this.step = 1;
+  } else {
+    this.startIndex = start;
+    this.endIndex = end;
+    this.step = step;
+  }
 };
 
 Range.prototype.size = function () {
+  return (this.endIndex - this.startIndex) / this.step + 1;
 };
 
 Range.prototype.each = function (callback) {
+  for (var i = this.startIndex; i <= this.endIndex; i += this.step) {
+    callback(i);
+  }
 };
 
 Range.prototype.includes = function (val) {
+  var result = false;
+  for (var i = this.startIndex; i <= this.endIndex; i += this.step) {
+    if (i === val) {
+      result = true;
+    }
+  }
+  return result;
 };
 
-var range = new Range(1);
+var evenNumbers = new Range(2, 8, 2); // A range with the even numbers 2, 4, 6, and 8.
+evenNumbers.each(function (val) {
+  console.log(val + '!');
+});
 
+console.log(evenNumbers.size());
+console.log(evenNumbers.includes(2));
