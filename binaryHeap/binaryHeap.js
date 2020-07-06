@@ -78,32 +78,26 @@ var swap = function (array, i, j) {
   array[j] = temp;
 };
 
-var heapifyUp = function (childrenIndex, heapTree) {
-  if (childrenIndex === 0) return;
-  var parentIndex = Math.floor((childrenIndex - 1) / 2);
-  if (heapTree[childrenIndex] < heapTree[parentIndex]) {
-    swap(heapTree, parentIndex, childrenIndex);
-  }
-
-  heapifyUp(parentIndex, heapTree);
-};
-
 var heapifyDown = function (parentIndex, heapTree) {
   if (parentIndex === heapTree.length - 1) return;
-  var childrenIndex = [parentIndex * 2 + 1, parentIndex * 2 + 2];
-  if (
-    heapTree[childrenIndex[0]] &&
-    heapTree[childrenIndex[0]] < heapTree[parentIndex]
-  ) {
-    swap(heapTree, parentIndex, childrenIndex[0]);
-    parentIndex = childrenIndex[0];
-    heapifyDown(parentIndex, heapTree);
-  } else if (
-    heapTree[childrenIndex[1]] &&
-    heapTree[childrenIndex[1]] < heapTree[parentIndex]
-  ) {
-    swap(heapTree, parentIndex, childrenIndex[1]);
-    parentIndex = childrenIndex[1];
+  // var childrenIndex = [parentIndex * 2 + 1, parentIndex * 2 + 2];
+  var minIndex = parentIndex;
+  var child1 = parentIndex * 2 + 1;
+  var child2 = parentIndex * 2 + 2;
+  if (heapTree[child1]) {
+    if (heapTree[child1] < heapTree[parentIndex]) {
+      minIndex = child1;
+      if (heapTree[child2] && heapTree[child2] < heapTree[child1]) {
+        minIndex = child2;
+      }
+    } else if (heapTree[child2] && heapTree[child2] < heapTree[parentIndex]) {
+      minIndex = child2;
+    }
+  }
+
+  if (minIndex !== parentIndex) {
+    swap(heapTree, parentIndex, minIndex);
+    parentIndex = minIndex;
     heapifyDown(parentIndex, heapTree);
   } else {
     return;
@@ -117,6 +111,15 @@ BinaryHeap.prototype.getRoot = function () {
 BinaryHeap.prototype.insert = function (value) {
   // TODO: Your code here
   this._heap.push(value);
+  var heapifyUp = function (childrenIndex, heapTree) {
+    if (childrenIndex === 0) return;
+    var parentIndex = Math.floor((childrenIndex - 1) / 2);
+    if (heapTree[childrenIndex] < heapTree[parentIndex]) {
+      swap(heapTree, parentIndex, childrenIndex);
+    }
+
+    heapifyUp(parentIndex, heapTree);
+  };
   heapifyUp(this._heap.length - 1, this._heap);
 };
 
