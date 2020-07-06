@@ -31,6 +31,9 @@ var translateRomanNumeral = function (romanNumeral) {
   if (typeof romanNumeral !== 'string') {
     return null;
   }
+  if (romanNumeral.length === 0) {
+    return 0;
+  }
   var romanArray = romanNumeral.split('');
   var result = 0;
   for (var i = 0; i < romanArray.length - 1; i++) {
