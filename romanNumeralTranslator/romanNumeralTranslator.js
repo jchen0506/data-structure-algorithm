@@ -1,10 +1,9 @@
-
 /**
  * Given a roman numeral as input, write a function that converts the roman
  * numeral to a number and outputs it.
  *
  * Ex:
- * translateRomanNumeral("LX") // 60
+ *  // 60
  *
  * When a smaller numeral appears before a larger one, it becomes
  * a subtractive operation. You can assume only one smaller numeral
@@ -24,10 +23,30 @@ var DIGIT_VALUES = {
   L: 50,
   C: 100,
   D: 500,
-  M: 1000
+  M: 1000,
 };
 
-var translateRomanNumeral = function(romanNumeral) {
-// TODO: Implement me!
+var translateRomanNumeral = function (romanNumeral) {
+  // TODO: Implement me!
+  if (typeof romanNumeral !== 'string') {
+    return null;
+  }
+  var romanArray = romanNumeral.split('');
+  var result = 0;
+  for (var i = 0; i < romanArray.length - 1; i++) {
+    var char1 = romanArray[i];
+    var num1 = DIGIT_VALUES[char1];
+    var char2 = romanArray[i + 1];
+    var num2 = DIGIT_VALUES[char2];
 
+    if (num1 < num2) {
+      num1 *= -1;
+    }
+    result += num1;
+  }
+
+  return result + DIGIT_VALUES[romanArray[romanArray.length - 1]];
 };
+
+console.log(translateRomanNumeral('LX'));
+console.log(translateRomanNumeral('IV'));
