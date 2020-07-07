@@ -17,25 +17,39 @@ var largestProductOfThree = function (array) {
     return product of the 3 numbers array
     */
   var result = [];
+  var resultAb = [];
   for (var i = 0; i < 3; i++) {
     result.push(array[i]);
+    resultAb.push(array[i]);
   }
-  // result.sort(comparator);
+
   for (var j = 3; j < array.length; j++) {
     var min = result.sort(comparator)[2];
+    var minAb = resultAb.sort(comparatorAb)[2];
     if (array[j] > min) {
       result.pop();
       result.push(array[j]);
     }
+    if (Math.abs(array[j]) > minAb) {
+      resultAb.pop();
+      resultAb.push(array[j]);
+    }
   }
   var product = result[0] * result[1] * result[2];
-  return product;
+  var productAb = resultAb[0] * resultAb[1] * resultAb[2];
+  return product > productAb ? product : productAb;
 };
 
 var comparator = function (a, b) {
   return b - a;
 };
 
+var comparatorAb = function (a, b) {
+  return Math.abs(b) - Math.abs(a);
+};
+
 var array = [5, 3, 1, 4, 9, 7, 6];
 
 console.log(largestProductOfThree(array)); //expect (9*7*6)=378
+console.log(largestProductOfThree([2, 3, -11, 7, 5, -13])); //expect 1001
+console.log(largestProductOfThree([-1, -2, -3, -4, -5, -6])); // expect -6
