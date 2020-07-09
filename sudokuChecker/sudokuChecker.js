@@ -36,8 +36,12 @@ var standard = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 var checkRows = function (board) {
   for (var i = 0; i < board.length; i++) {
     var row = board[i].slice().sort();
-    if (JSON.stringify(standard) !== JSON.stringify(row)) return false;
+    if (JSON.stringify(standard) !== JSON.stringify(row)) {
+      console.log(rows);
+      return false;
+    }
   }
+
   return true;
 };
 
@@ -47,8 +51,10 @@ var checkColumns = function (board) {
     for (var j = 0; j < board.length; j++) {
       column.push(board[j][i]);
     }
-    if (JSON.stringify(standard) !== JSON.stringify(column.sort()))
+    if (JSON.stringify(standard) !== JSON.stringify(column.sort())) {
+      console.log(column);
       return false;
+    }
   }
   return true;
 };
@@ -61,7 +67,8 @@ var checkGrid = function (board) {
         grid.push(board[j][k]);
       }
     }
-    if (JSON.stringify(standard) !== JSON.stringify(grid)) {
+    if (JSON.stringify(standard) !== JSON.stringify(grid.sort())) {
+      console.log(grid);
       return false;
     }
   }
