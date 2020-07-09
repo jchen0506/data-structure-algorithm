@@ -37,7 +37,7 @@ var checkRows = function (board) {
   for (var i = 0; i < board.length; i++) {
     var row = board[i].slice().sort();
     if (JSON.stringify(standard) !== JSON.stringify(row)) {
-      console.log(rows);
+      console.log(row);
       return false;
     }
   }
@@ -76,7 +76,7 @@ var checkGrid = function (board) {
 };
 
 var board =
-  '735814296\n896275314\n214963857\n589427163\n362189745\n471356982\n923541678\n648792531\n157638429';
+  '111111111\n222222222\n333333333\n444444444\n555555555\n666666666\n777777777\n888888888\n999999999';
 /*board =[
   [7,3,5,8,1,4,2,9,6],
   [8,9,6,2,7,5,3,1,4],
