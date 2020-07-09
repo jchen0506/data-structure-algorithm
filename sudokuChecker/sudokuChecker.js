@@ -29,7 +29,7 @@ function sudokuChecker(board) {
 
   var result = checkRows(matrix) && checkColumns(matrix) && checkGrid(matrix);
 
-  return result;
+  return result ? 'solved' : 'invalid';
 }
 
 var standard = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
