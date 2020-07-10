@@ -11,21 +11,25 @@
 
 function reverseInteger(number) {
   // TODO: Implement this function!
-
   var i = 10;
   var reversed = 0;
+  var digit = number % 10;
+
+  while (digit === 0) {
+    number = Math.floor(number / 10);
+    digit = number % 10;
+  }
+
   while (number % i > 0) {
     var digit = number % 10;
-    console.log(digit);
+
     number = Math.floor(number / 10);
-    console.log(number);
     reversed = reversed * 10 + digit;
-    console.log(digit);
   }
   return reversed;
 }
 
-console.log(reverseInteger(574973)); // 379475
+console.log(reverseInteger(100)); // 379475
 
 /*
   574973 %10 =3 (574972 / 10)  => 3*1
