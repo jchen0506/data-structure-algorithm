@@ -20,16 +20,16 @@ function reverseInteger(number) {
     digit = number % 10;
   }
 
-  while (number % i > 0) {
-    var digit = number % 10;
-
-    number = Math.floor(number / 10);
-    reversed = reversed * 10 + digit;
+  while (number > 0) {
+    digit = number % 10; //digit=1, 0
+    number = Math.floor(number / 10); //number=100, 10
+    reversed = reversed * 10 + digit; //1, 1001;
   }
   return reversed;
 }
 
-console.log(reverseInteger(100)); // 379475
+console.log(reverseInteger(1001000)); // 379475
+console.log(reverseInteger(379475)); // 574973
 
 /*
   574973 %10 =3 (574972 / 10)  => 3*1
