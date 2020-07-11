@@ -43,16 +43,28 @@ var Range = function (start, end, step) {
     return null;
   }
   this.start = start;
-  this.end = end || start;
-  this.step = step || 1;
+
+  this.end = end === undefined ? start : end;
+  if (step) {
+    this.step = step;
+  } else {
+    if (this.start > this.end) {
+      this.step = -1;
+    } else {
+      this.step = 1;
+    }
+  }
+
+  console.log(this.step);
   // this.step = this.start > this.end ? step * -1 : step;
 };
 
 Range.prototype.size = function () {
-  return (this.end - this.start) / this.step + 1;
+  return Math.floor((this.end - this.start) / this.step) + 1;
 };
 
 Range.prototype.each = function (callback) {
+  console.log(this.step);
   if (this.step > 0) {
     for (var i = this.start; i <= this.end; i += this.step) {
       callback(i);
@@ -83,10 +95,10 @@ Range.prototype.includes = function (val) {
   return result;
 };
 
-var evenNumbers = new Range(8, 2, -2); // A range with the even numbers 2, 4, 6, and 8.
-evenNumbers.each(function (val) {
-  console.log(val + '!');
+var countdown = new Range(0, 10, 2);
+var elements = [];
+countdown.each(function (val) {
+  elements.push(val);
 });
-console.log(evenNumbers.size());
-console.log(evenNumbers.includes(4));
-console.log(evenNumbers.includes(0));
+console.log(elements);
+console.log(countdown.size());
