@@ -20,23 +20,33 @@
 //    ==>j, jm,jp, ju,jmp,jmu, jpu,jmpu
 //    ==>m, mp, mu, mpu
 
-var powerSet = function(str) {
+var powerSet = function (str) {
   var array = str.split('').sort();
-  var result =[];
-  for (var i=0; i < str.length; i++){
-    result.push(['',array[i]]);
+  array = removeDuplicate(array);
+  var result = [];
+  for (var i = 0; i < array.length; i++) {
+    result.push(['', array[i]]);
   }
-  for ( var j=result.length-1;j>0;j--){
-    var last =result[j];
-    var first= result[j-1];
+  console.log(result);
+  for (var j = result.length - 1; j > 0; j--) {
+    var last = result[j];
+    var first = result[j - 1];
 
-    for (var k =1; k<last.length;k++){
-      first.push( first[0].concat(last[k]))
-      first.push( first[1].concat(last[k]));
+    for (var k = 1; k < last.length; k++) {
+      first.push(first[0].concat(last[k]));
+      first.push(first[1].concat(last[k]));
     }
   }
   return result[0];
-
+};
+var removeDuplicate = function (array) {
+  var obj = {};
+  for (var i = 0; i < array.length; i++) {
+    if (obj[array[i]] == undefined) {
+      obj[array[i]] = 1;
+    }
+  }
+  return Object.keys(obj);
 };
 
 console.log(powerSet('aaaabbbb'));
