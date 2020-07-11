@@ -16,6 +16,10 @@ var toFraction = function (number) {
   // Your code here
   var splitDigit = number.toString().split('.');
 
+  if (splitDigit.length === 1) {
+    return splitDigit[0] + '/1';
+  }
+
   var leftToDot = Number(splitDigit[0]);
   var rightToDot = Number(splitDigit[1]);
 
@@ -24,7 +28,6 @@ var toFraction = function (number) {
     divisor *= 10;
   }
   var commonDivisor = findGreatestCommanDivsor(rightToDot, divisor);
-  console.log(commonDivisor);
   var fractionBottom = divisor / commonDivisor;
   var fractionTop = rightToDot / commonDivisor;
 
@@ -47,8 +50,9 @@ var findGreatestCommanDivsor = function (num1, num2) {
 
 var findLeastCommonMultiple = function (num1, num2) {};
 
-console.log(toFraction(2.5));
-console.log(toFraction(2.25));
+console.log(toFraction(3.0));
+console.log(toFraction(5.4));
+
 /* exmaple:
 0.5 => [0, 5] => 5/10 =>
 {
