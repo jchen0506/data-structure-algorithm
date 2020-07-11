@@ -1,8 +1,8 @@
 /**
  * Build a class to represent a range of numbers that takes:
- *   - a beginning index,
- *   - an end index (optional)
- *     If there is no end index, the range should include only the passed-in start value.
+ *   - a beginning ,
+ *   - an end  (optional)
+ *     If there is no end , the range should include only the passed-in start value.
  *   - a 'step' (optional)
  *     The step is the interval at which elements are included.
  *     For instance, a step of 1 includes every element in the range,
@@ -12,8 +12,8 @@
  *
  * It should also support the following utility functions:
  *   - size(): return the number of items represented by the range
- *   - each(callback(index)): iterate over the range, passing each value to a callback function
- *   - includes(index): return whether or not the range includes the passed value
+ *   - each(callback()): iterate over the range, passing each value to a callback function
+ *   - includes(): return whether or not the range includes the passed value
  *
  * You should also be aware of the following caveats:
  *   - You should allow a negative value for 'step' to count backwards.
@@ -41,37 +41,52 @@
 var Range = function (start, end, step) {
   if (start === undefined) {
     return null;
-  } else if (end === undefined) {
-    this.startIndex = start;
-    this.endIndex = start;
-    this.step = 0;
-  } else if (step === undefined) {
-    this.startIndex = start;
-    this.endIndex = end;
-    this.step = 1;
-  } else {
-    this.startIndex = start;
-    this.endIndex = end;
-    this.step = step;
   }
+  this.start = start;
+  this.end = end || start;
+  this.step = step || 1;
+  this.step = this.start > this.end ? step * -1 : step;
 };
 
 Range.prototype.size = function () {
-  return (this.endIndex - this.startIndex) / this.step + 1;
+  return (this.end - this.start) / this.step + 1;
 };
 
 Range.prototype.each = function (callback) {
-  for (var i = this.startIndex; i <= this.endIndex; i += this.step) {
-    callback(i);
+  if (this.step > 0) {
+    for (var i = this.start; i <= this.end; i += this.step) {
+      callback(i);
+    }
+  } else {
+    for (var i = this.start; i >= this.end; i += this.step) {
+      callback(i);
+    }
   }
 };
 
 Range.prototype.includes = function (val) {
   var result = false;
-  for (var i = this.startIndex; i <= this.endIndex; i += this.step) {
-    if (i === val) {
-      result = true;
+  if (this.step > 0) {
+    for (var i = this.start; i <= this.end; i += this.step) {
+      if (i === val) {
+        result = true;
+      }
+    }
+  } else {
+    for (var i = this.start; i >= this.end; i += this.step) {
+      if (i === val) {
+        result = true;
+      }
     }
   }
+
   return result;
 };
+
+var evenNumbers = new Range(8, 2, 2); // A range with the even numbers 2, 4, 6, and 8.
+evenNumbers.each(function (val) {
+  console.log(val + '!');
+});
+console.log(evenNumbers.size());
+console.log(evenNumbers.includes(4));
+console.log(evenNumbers.includes(0));
