@@ -16,36 +16,19 @@ var largestProductOfThree = function (array) {
     push new number ,pop min
     return product of the 3 numbers array
     */
-  var result = [];
-  var resultAb = [];
-  for (var i = 0; i < 3; i++) {
-    result.push(array[i]);
-    resultAb.push(array[i]);
-  }
+  var arraySorted = array.sort(comparator);
+  console.log(arraySorted);
+  var option1 = arraySorted[0] * arraySorted[1] * arraySorted[array.length - 1];
+  var option2 =
+    arraySorted[array.length - 3] *
+    arraySorted[array.length - 2] *
+    arraySorted[array.length - 1];
 
-  for (var j = 3; j < array.length; j++) {
-    var min = result.sort(comparator)[2];
-    var minAb = resultAb.sort(comparatorAb)[2];
-    if (array[j] > min) {
-      result.pop();
-      result.push(array[j]);
-    }
-    if (Math.abs(array[j]) > minAb) {
-      resultAb.pop();
-      resultAb.push(array[j]);
-    }
-  }
-  var product = result[0] * result[1] * result[2];
-  var productAb = resultAb[0] * resultAb[1] * resultAb[2];
-  return product > productAb ? product : productAb;
+  return option1 > option2 ? option1 : option2;
 };
 
 var comparator = function (a, b) {
-  return b - a;
-};
-
-var comparatorAb = function (a, b) {
-  return Math.abs(b) - Math.abs(a);
+  return a - b;
 };
 
 var array = [5, 3, 1, 4, 9, 7, 6];
