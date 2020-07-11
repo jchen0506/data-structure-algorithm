@@ -45,7 +45,7 @@ var Range = function (start, end, step) {
   this.start = start;
   this.end = end || start;
   this.step = step || 1;
-  this.step = this.start > this.end ? step * -1 : step;
+  // this.step = this.start > this.end ? step * -1 : step;
 };
 
 Range.prototype.size = function () {
@@ -83,7 +83,7 @@ Range.prototype.includes = function (val) {
   return result;
 };
 
-var evenNumbers = new Range(8, 2, 2); // A range with the even numbers 2, 4, 6, and 8.
+var evenNumbers = new Range(8, 2, -2); // A range with the even numbers 2, 4, 6, and 8.
 evenNumbers.each(function (val) {
   console.log(val + '!');
 });
