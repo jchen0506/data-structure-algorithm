@@ -31,7 +31,10 @@ var toFraction = function (number) {
   var fractionBottom = divisor / commonDivisor;
   var fractionTop = rightToDot / commonDivisor;
 
-  var resultTop = leftToDot * fractionBottom + fractionTop;
+  var resultTop =
+    leftToDot < 0
+      ? leftToDot * fractionBottom - fractionTop
+      : leftToDot * fractionBottom + fractionTop;
   var resultBottom = fractionBottom;
 
   return resultTop + '/' + resultBottom;
