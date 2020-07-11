@@ -51,5 +51,5 @@ var comparatorAb = function (a, b) {
 var array = [5, 3, 1, 4, 9, 7, 6];
 
 console.log(largestProductOfThree(array)); //expect (9*7*6)=378
-console.log(largestProductOfThree([2, 3, -11, 7, 5, -13])); //expect 1001
+console.log(largestProductOfThree([-31, 41, 34, -37, -17, 29])); //expect 47027 41*-31*37
 console.log(largestProductOfThree([-1, -2, -3, -4, -5, -6])); // expect -6
