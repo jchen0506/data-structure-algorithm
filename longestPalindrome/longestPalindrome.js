@@ -25,6 +25,8 @@ var longestPalindrome = function (string) {
       right = i + 1;
     } else if (array[i - 1] === array[i + 1]) {
       palindrome = array[i - 1] + array[i] + array[i + 1];
+      left = i - 1;
+      right = i + 1;
     } else {
       continue;
     }
