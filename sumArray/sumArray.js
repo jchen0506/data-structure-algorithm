@@ -10,5 +10,23 @@
  */
 
 // Solved in O(n) time with O(1) memory
-var sumArray = function(array) {
+var sumArray = function (array) {
+  var max = array[array.length - 1];
+  for (var i = array.length - 2; i >= 0; i--) {
+    array[i] = Math.max(array[i] + array[i + 1], array[i]);
+    if (max < array[i]) {
+      max = array[i];
+    }
+  }
+  return max;
 };
+
+/*
+greatest and contiguous
+  1,2,3,-4,5 ->  1+2+3-4+5
+  result[5]= result[-1]+5;
+*/
+console.log(sumArray([1, 2, 3])); // => 6
+console.log(sumArray([1, 2, 3, -4, 5])); // 7
+console.log(sumArray([4, -1, 5])); // => 8
+console.log(sumArray([10, -11, 11])); // 11
