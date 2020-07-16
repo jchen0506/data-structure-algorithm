@@ -83,7 +83,7 @@ Number.prototype.toEnglish = function () {
       }
     }
   };
-  helper(this., 7);
+  helper(this, 7);
   return result;
 };
 

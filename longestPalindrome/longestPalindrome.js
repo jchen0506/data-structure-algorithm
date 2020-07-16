@@ -17,8 +17,8 @@ var longestPalindrome = function (string) {
     var length2 = extendFromCenter(array, i, i + 1);
     var maxlength = Math.max(length1, length2);
     if (maxlength > end - start) {
-      start = i - (maxlength - 1) / 2;
-      end = i + maxlength / 2;
+      start = i - Math.floor((maxlength - 1) / 2);
+      end = i + Math.floor(maxlength / 2);
     }
   }
   return array.slice(start, end + 1).join('');
@@ -41,7 +41,7 @@ e ->cec->aceca ->.....a racecar a
 
 */
 
-var string2 = 'cccc';
+var string2 = 'My dad is a racecar athlete';
 console.log(longestPalindrome(string2)); // dceaaecd
 
 /*
