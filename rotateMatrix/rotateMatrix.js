@@ -45,6 +45,7 @@
 
 var rotateMatrix = function (matrix) {
   // Your code here.
+  if (matrix.length === 0) return [];
   var result = [];
   var height = matrix.length;
   var width = matrix[0].length;
@@ -57,15 +58,9 @@ var rotateMatrix = function (matrix) {
   return result;
 };
 
-console.log(
-  rotateMatrix([
-    [1, 2, 3, 4],
-    [5, 6, 7, 8],
-    [9, 'A', 'B', 'C'],
-    ['D', 'E', 'F', 'G'],
-  ])
-);
+console.log(rotateMatrix([]));
 
+console.log(rotateMatrix([[1, 2, 3, 4]]));
 /*
    [
     ['D',9,5,1],
