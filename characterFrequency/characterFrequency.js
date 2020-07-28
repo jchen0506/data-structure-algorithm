@@ -35,7 +35,50 @@
  *
  */
 
+var characterFrequency = function (string) {
+  var result = [];
+  var obj = {};
+  var array = string.split('');
 
-var characterFrequency = function(string) {
+  for (var i = 0; i < array.length; i++) {
+    if (obj[array[i]] === undefined) obj[array[i]] = 1;
+    else obj[array[i]]++;
+  }
+
+  for (var key in obj) {
+    result.push([key, obj[key]]);
+  }
+
   return result;
 };
+
+var swap = function (array, index1, index2) {
+  var temp = array[index1];
+  array[index1] = array[index2];
+  array[index2] = temp;
+};
+//test
+console.log(characterFrequency('mmmaaaiiibbb'));
+/*  [
+ *    ['a', 3],
+ *    ['b', 3],
+ *    ['i', 3],
+ *    ['m', 3]
+ *  ]
+ */
+console.log(characterFrequency('miaaiaaippi'));
+/* [
+ *    ['a', 4],
+ *    ['i', 4],
+ *    ['p', 2],
+ *    ['m', 1]
+ *  ]
+ * */
+
+console.log(characterFrequency('mississippi'));
+// *  [
+//  *    ['a', 3],
+//  *    ['b', 3],
+//  *    ['i', 3],
+//  *    ['m', 3]
+//  *  ]
