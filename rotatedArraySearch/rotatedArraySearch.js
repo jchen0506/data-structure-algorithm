@@ -61,7 +61,7 @@ var findIndex = function (rotated, left, right) {
 };
 
 console.log(findIndex([2, 3, 4, 5, 6, 0, 1], 0, 6));
-console.log(rotatedArraySearch([4, 5, 6, 7, 8, 9, 0, 1, 2, 3], 7));
+console.log(rotatedArraySearch([1, 2, 3], 5));
 /*
 [4, 5, 6, 7, 8, 9, 0, 1, 2, 3][4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
 start: 6
