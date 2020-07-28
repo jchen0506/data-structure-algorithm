@@ -16,33 +16,56 @@
  */
 
 var rotatedArraySearch = function (rotated, target) {
-  // Your code here:
-  var resort = rotated.sort();
-  console.log(resort);
-  var left = 0;
-  var right = resort.length - 1;
+  var start_index = findIndex(rotated, 0, rotated.length - 1);
+  if (rotated[start_index] === target) {
+    return start_index;
+  } else if (target > rotated[0] && target < rotated[start_index - 1]) {
+    return binarySearch(rotated, target, 0, start_index - 1);
+  } else {
+    return binarySearch(rotated, target, start_index + 1, rotated.length - 1);
+  }
+};
+
+var binarySearch = function (array, target, left, right) {
+  var mid = Math.floor((left + right) / 2);
+
   while (left <= right) {
-    var mid = Math.floor((left + right) / 2);
-    if (resort[mid] === target) {
-      return mid;
+    if (array[mid] === target) return mid;
+    else if (target > array[mid]) {
+      return binarySearch(array, target, mid + 1, right);
     } else {
-      if (target < resort[mid]) {
-        right = mid - 1;
-        console.log(right);
-      } else {
-        left = mid + 1;
-      }
+      return binarySearch(array, target, left, mid - 1);
     }
   }
   return -1;
 };
 
-console.log(rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 100));
+var findIndex = function (rotated, left, right) {
+  if (rotated[left] < rotated[right]) {
+    return 0;
+  }
+  while (left <= right) {
+    var mid = Math.floor((left + right) / 2);
+    if (rotated[mid] > rotated[mid + 1]) {
+      return mid + 1;
+    } else {
+      if (rotated[left] > rotated[mid]) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
+    }
+  }
+  return 0;
+};
+
+console.log(findIndex([2, 3, 4, 5, 6, 0, 1], 0, 6));
+console.log(rotatedArraySearch([4, 5, 6, 7, 8, 9, 0, 1, 2, 3], 7));
 /*
-[4,5,6,0,1,2,3]
-[2,3,4,5,6,0,1]
-index 0-6, 7=0
-6 0 1 2 3 4 5
-2, 2>1, 2<3,
-5, 5<6, 5>4
+[4, 5, 6, 7, 8, 9, 0, 1, 2, 3][4, 5, 6, 7, 8, 9, 0, 1, 2, 3]
+start: 6
+0 9 6+15/2=10  % 9-1
+mid: 0
+
+
 */
