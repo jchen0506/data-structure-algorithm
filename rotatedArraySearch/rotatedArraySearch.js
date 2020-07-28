@@ -38,7 +38,7 @@ var binarySearch = function (array, target, left, right) {
       return binarySearch(array, target, left, mid - 1);
     }
   }
-  return -1;
+  return null;
 };
 
 var findIndex = function (rotated, left, right) {
