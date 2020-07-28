@@ -24,6 +24,7 @@ var rotatedArraySearch = function (rotated, target) {
   } else {
     return binarySearch(rotated, target, start_index + 1, rotated.length - 1);
   }
+  return -1;
 };
 
 var binarySearch = function (array, target, left, right) {
