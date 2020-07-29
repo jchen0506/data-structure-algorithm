@@ -22,10 +22,14 @@
 
 var nthFibonacci = function (n) {
   // TODO: implement me!
-  if (n === 0) return 0;
-  if (n === 1) return 1;
-  result = nthFibonacci(n - 1) + nthFibonacci(n - 2);
-  return result;
+  var result = [0, 1];
+  var i = 2;
+  while (i <= n) {
+    result.push(result[i - 2] + result[i - 1]);
+    i++;
+  }
+
+  return result[n];
 };
 
 console.log(nthFibonacci(2)); // => 1
