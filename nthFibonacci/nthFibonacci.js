@@ -22,7 +22,12 @@
 
 var nthFibonacci = function (n) {
   // TODO: implement me!
+  if (n === 0) return 0;
+  if (n === 1) return 1;
+  result = nthFibonacci(n - 1) + nthFibonacci(n - 2);
+  return result;
 };
 
-
-
+console.log(nthFibonacci(2)); // => 1
+console.log(nthFibonacci(3)); // => 2
+console.log(nthFibonacci(10)); // => 3
