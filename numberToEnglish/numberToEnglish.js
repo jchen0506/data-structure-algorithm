@@ -59,7 +59,7 @@ Number.prototype.toEnglish = function () {
   var result = '';
   var helper = function (num, place) {
     console.log(num);
-    console.log(place);
+    // console.log(place);
     for (var i = place; i >= 0; i--) {
       if (num / numbersToPlaceArray[i] < 1) {
         continue;
@@ -69,7 +69,7 @@ Number.prototype.toEnglish = function () {
           num / numbersToPlaceArray[i] > 1 &&
           num / numbersToPlaceArray[i] < 10
         ) {
-          reult +=
+          result +=
             numbersToWords[
               Math.floor(num / numbersToPlaceArray[i]) * numbersToPlaceArray[i]
             ];
@@ -79,7 +79,6 @@ Number.prototype.toEnglish = function () {
           helper(Math.floor(num / numbersToPlaceArray[i], i)) +
           numbersToPlace[numbersToPlaceArray[i]] +
           helper(Math.floor(num % numbersToPlaceArray[i], i));
-        break;
       }
     }
   };

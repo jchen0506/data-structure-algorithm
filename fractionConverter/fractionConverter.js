@@ -54,7 +54,7 @@ var findGreatestCommanDivsor = function (num1, num2) {
 var findLeastCommonMultiple = function (num1, num2) {};
 
 console.log(toFraction(3.0));
-console.log(toFraction(5.4));
+console.log(toFraction(5.3));
 
 /* exmaple:
 0.5 => [0, 5] => 5/10 =>
