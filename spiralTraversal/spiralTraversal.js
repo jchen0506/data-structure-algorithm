@@ -16,58 +16,56 @@
 
 var spiralTraversal = function (matrix) {
   // TODO: Implement me!
-  var result = [];
-  var flag = [];
-  for (let row = 0; row < matrix.length; row++) {
-    var flagrow = [];
-    for (let column = 0; column < matrix[0].length; column++) {
-      flagrow.push(false);
+  var res = [];
+
+  if (matrix.length === 0) return res;
+
+  var m = matrix.length;
+  var n = matrix[0].length;
+  var top = 0;
+  var bottom = m - 1;
+  var left = 0;
+  var right = n - 1;
+
+  while (top <= bottom && left <= right) {
+    for (let i = left; i <= right; i++) {
+      res.push(matrix[top][i]);
     }
-    flag.push(flagrow);
-  }
-  var i = 0;
-  var j = 0;
-  while (flag[i][j] === false || matrix[i][j] !== undefined) {
-    result.push(matrix[i][j]);
-    j++;
-    flag[i][j] = true;
-  }
-  i++;
-  j--;
-  while (flag[i][j] === false || matrix[i][j] !== undefined) {
-    result.push(matrix[i][j]);
-    i++;
-    flag[i][j] = true;
-  }
-  j--;
-  i--;
-  while (flag[i][j] === false || matrix[i][j] !== undefined) {
-    result.push(matrix[i][j]);
-    j--;
-    flag[i][j] = true;
-  }
-  i--;
-  while (flag[i][j] === false || matrix[i][j] !== undefined) {
-    result.push(matrix[i][j]);
-    i--;
-    flag[i][j] = true;
+    top++;
+    for (let i = top; i <= bottom; i++) {
+      res.push(matrix[i][right]);
+    }
+    right--;
+
+    if (top <= bottom) {
+      for (let i = right; i >= left; i--) {
+        res.push(matrix[bottom][i]);
+      }
+      bottom--;
+    }
+
+    if (left <= right) {
+      for (let i = bottom; i >= top; i--) {
+        res.push(matrix[i][left]);
+      }
+      left++;
+    }
   }
 
-  return result;
+  return res;
 };
 
 //test case
 console.log(
   spiralTraversal([
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [4, 5, 6, 7, 8, 9, 1, 2, 3],
-    [7, 8, 9],
+    [2, 5, 8],
+    [4, 0, -1],
   ])
 );
 
 /*
- row stays, column+1, until visited or undefined
- row+1, column stays, until visited or undefined
- row stays, column-1, until visited or undefined
- row-1, column statys, until visited or undefined
+row stays, column+1, until visited or undefined
+row+1, column stays, until visited or undefined
+row stays, column-1, until visited or undefined
+row-1, column statys, until visited or undefined
  */
