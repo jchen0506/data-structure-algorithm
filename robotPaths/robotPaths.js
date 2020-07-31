@@ -9,7 +9,7 @@
  *
  */
 /*
- 0=false -> true=1
+0=false -> true=1
   0 0 0 0 0
   0 0 0 0 0
   0 0 0 0 0
@@ -52,7 +52,7 @@ function robotPath
   i-1,up
      if (board[i][j] not equalt to undefined && !hasBeenVisited(i,j))
         robotPath(i,j)
-        
+
      else go right
      else go down
      else go left

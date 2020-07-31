@@ -58,7 +58,7 @@ var rotateMatrix = function (matrix, direction) {
     }
     return result;
   };
-  if (direction === 1) {
+  if (direction === 1 || direction === undefined) {
     return helper(matrix);
   } else if (direction === -1) {
     return helper(helper(helper(matrix)));
